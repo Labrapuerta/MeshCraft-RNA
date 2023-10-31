@@ -53,7 +53,7 @@ Before you can run the program, you'll need to have Docker Desktop installed on 
          cat /root/.config/code-server/config.yaml
          ```
 
-    4. In the output, look for the line that appears similar to this:
+    4. In the output, look for this line:
 
        ```yaml
        password: password
