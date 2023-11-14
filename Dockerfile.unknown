@@ -1,0 +1,45 @@
+FROM python:3.8.16
+
+WORKDIR /app
+# Requerimientos de GML site
+RUN pip install --upgrade pip
+RUN pip install numpy==1.24.4
+RUN pip install pyg-lib -f https://data.pyg.org/whl/torch-1.13.0+cu116.html
+RUN pip install pyparsing==3.0.9
+RUN pip install scikit-learn==1.2.2
+RUN pip install six
+RUN pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu116
+RUN pip install torch-scatter torch-sparse torch-cluster torch-spline-conv torch-geometric -f https://data.pyg.org/whl/torch-1.13.0%2Bcu116.html
+RUN pip install torch-geometric==2.2.0
+RUN pip install torchaudio==0.13.1
+RUN pip install torchvision==0.14.1
+RUN pip install urllib3==1.26.15
+RUN pip install wheel==0.38.4
+RUN pip install transformers
+RUN pip install sentencepiece
+
+# Instalación de blender
+RUN apt-get update && apt-get install -y \
+    git \
+    wget
+RUN wget https://download.blender.org/release/Blender2.80/blender-2.80-linux-glibc217-x86_64.tar.bz2 && \
+    tar -xjf blender-2.80-linux-glibc217-x86_64.tar.bz2 -C /opt/
+RUN echo 'alias blender="/opt/blender-2.80-linux-glibc217-x86_64/blender"' >> ~/.bashrc
+
+# Instalción de CCSB
+RUN wget https://ccsb.scripps.edu/msms/download/933/ && \
+    tar -xzf msms_i86_64Linux2_2.6.1.tar && \
+    rm msms_i86_64Linux2_2.6.1.tar
+# ejecución: ./msms.x86_64Linux2.2.6.1 -if entrada.pdb -of salida
+
+
+# Instalación de VS code
+RUN apt-get install -y curl unzip && \
+    curl -fsSL https://code-server.dev/install.sh | sh  
+
+
+COPY gmlsite/ .
+
+EXPOSE 8080
+
+CMD ["code-server","--bind-addr=0.0.0.0:8080","." ]
