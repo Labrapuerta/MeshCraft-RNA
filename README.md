@@ -13,7 +13,7 @@ Meshcraft RNA also incorporates Blender, an open-source tool used for creating, 
 
 ### Get the PDB file and it's aminoacid score using 
 
--[Nucleic acid binding](https://github.com/biomed-AI/nucleic-acid-binding/tree/main) 
+- [Nucleic acid binding](https://github.com/biomed-AI/nucleic-acid-binding/tree/main) 
 
 ### Upload the files to the google colab notebook and follow the instructions
 
