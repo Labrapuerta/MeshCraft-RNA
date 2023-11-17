@@ -3,6 +3,8 @@ import subprocess
 import os
 import re
 import point_cloud_utils as pcu
+from Bio.PDB import PDBParser, PDBIO, Select
+from Bio.PDB import Structure, Model, Chain, Residue, Atom
 import numpy as np
 import pickle as pkl
 import pandas as pd
@@ -51,7 +53,6 @@ class aminoacid_score:
         return filtered_clusters
 
     def _cluster_aminoacids(self):
-        print('a')
         score = pd.read_csv(self.aminoacid_score, delimiter= '\t', index_col=0)
         sorted_scores = score.sort_values(by = 'Score', ascending = False)
         clusters = sorted_scores.iloc[:5]
@@ -66,6 +67,36 @@ class aminoacid_score:
         filtered_clusters = self.filter_clusters(scored_function)
         return filtered_clusters
     
+class aminoacid_groups:
+    def __init__(self, pdb_file, cluster, group_n):
+        self.pdb_file = pdb_file
+        self.cluster = cluster[0]
+        self.score = cluster[1]
+        self.group_n = group_n
+        self.output_file = os.path.join(os.getcwd(),'meshed _clusters', self.group_n)
+        self._extract_model()
+
+    def _extract_model(self):
+        # Initialize PDB parser and structure
+        pdb_parser = PDBParser()
+        structure = pdb_parser.get_structure('protein', self.pdb_file)
+
+        # Create a new structure to hold the selected amino acids
+        new_structure = Structure.Structure("New_Protein")
+
+        for model in structure:
+            new_model = Model.Model(model.id)
+            new_structure.add(new_model)
+            for chain in model:
+                new_chain = Chain.Chain(chain.id)
+                new_model.add(new_chain)
+                for residue in chain:
+                    if residue.id[1] in self.cluster:  # Check if residue number is in your list
+                        new_chain.add(residue)
+        io = PDBIO()
+        io.set_structure(new_structure)
+        io.save(self.output_file + '.pdb')  
+
 
 class mesher(aminoacid_score):
     def __init__(self, pdb_file,faces = 15000):
