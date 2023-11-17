@@ -37,7 +37,7 @@ class aminoacid_score:
 
 class mesher(aminoacid_score):
     def __init__(self, pdb_file,faces = 15000):
-        self.msms = 'msms_i86_64Linux2_2.6.1\msms.x86_64Linux2.2.6.1'
+        self.msms = 'msms_i86_64Linux2_2.6.1\msms.x86_64Linux2.2.6.1.staticgcc'
         self.pdb_file = pdb_file
         self.name = self._pdb_name()
         self.faces = str(faces)
