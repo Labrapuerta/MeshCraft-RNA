@@ -9,6 +9,9 @@ Meshcraft RNA also incorporates Blender, an open-source tool used for creating, 
 ![image](https://github.com/Labrapuerta/MeshCraft-RNA/assets/69869351/1a5e4a32-e1b1-41ac-b16b-86a05ce567b6)
 
 
+## Currently we are dealing with compatibility problems with Docker and Nucleic acid binding, to solve this temporarily we developed this google colab to mesh the processed output of the program
+
+- [Colab Notebook](https://colab.research.google.com/drive/1EYucZ4VVxXrWLzk4PZJi365-zcfUlQsO?usp=sharing)
 
 
 ## Prerequisites
