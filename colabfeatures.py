@@ -32,7 +32,7 @@ class aminoacid_score:
 
     def _read_pdb(self):
         with open(self.pdb_file, 'r') as f:
-            pdb = f.readlines()
+            pdb = f.read()
             return pdb
 
 class mesher(aminoacid_score):
