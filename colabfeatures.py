@@ -70,7 +70,6 @@ class mesher(aminoacid_score):
         try:
             subprocess.run(["pdb2pqr", "-ff=AMBER", f"{self.pdb_file}", f"{os.path.join(self.output_files,self.pqr_name)}"], capture_output= True)
             os.remove(f'{os.path.join(self.output_files, self.name)}.log')
-            print('RNA forcefields processed')
             return os.path.join(self.output_files,self.pqr_name)
         except:
             print('Unable to process RNA forcefields')
@@ -97,7 +96,7 @@ class mesher(aminoacid_score):
     
     def _xyzrn2mesh(self):
         try:
-            subprocess.run([self.msms, '-if ', self.xyzrn_file , '-of ', os.path.join(self.output_files,self.name), '-prob', '1.4', '-density', '1', '-no_header'], shell=True, capture_output= True)  
+            subprocess.run([self.msms, '-if ', self.xyzrn_file , '-of ', os.path.join(self.output_files,self.name), '-prob', '1.4', '-density', '1', '-no_header'], capture_output= True)  
         except:
             print('Unable to mesh RNA')
     
