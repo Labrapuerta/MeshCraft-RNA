@@ -82,7 +82,7 @@ class aminoacid_score:
                         avg_z = sum(atom.get_coord()[2] for atom in atoms) / len(atoms)
                         print(f"Avg Coordinates: x={avg_x}, y={avg_y}, z={avg_z}")
                         break
-
+                        
 class aminoacid_groups:
     def __init__(self, pdb_file, cluster, group_n):
         self.pdb_file = pdb_file
