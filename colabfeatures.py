@@ -59,7 +59,7 @@ class aminoacid_score:
         aminoacid_groups = []
         scored_function = []
         for i in clusters.index:
-            aminoacid_groups.append([i-1,i,i+1])
+            aminoacid_groups.append([i-1,i,i+1, i+2])
         for i in aminoacid_groups:
             cluster = score.iloc[i]
             scored_function.append((cluster.index.tolist(),cluster['Score'].mean()))
@@ -67,6 +67,22 @@ class aminoacid_score:
         filtered_clusters = self.filter_clusters(scored_function)
         return filtered_clusters
     
+    def _get_coords(self, group):
+        amino_acid_residue_number = group[0][1]  # Replace with your amino acid number
+        parser = PDBParser()
+        structure = parser.get_structure('protein', self.pdb_file)
+        for model in structure:
+            for chain in model:
+                for residue in chain:
+                    if residue.get_id()[1] == amino_acid_residue_number:
+                        # Calculate the average coordinates of the amino acid
+                        atoms = list(residue.get_atoms())
+                        avg_x = sum(atom.get_coord()[0] for atom in atoms) / len(atoms)
+                        avg_y = sum(atom.get_coord()[1] for atom in atoms) / len(atoms)
+                        avg_z = sum(atom.get_coord()[2] for atom in atoms) / len(atoms)
+                        print(f"Avg Coordinates: x={avg_x}, y={avg_y}, z={avg_z}")
+                        break
+
 class aminoacid_groups:
     def __init__(self, pdb_file, cluster, group_n):
         self.pdb_file = pdb_file

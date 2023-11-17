@@ -74,7 +74,7 @@ class aminoacid_groups:
         self.cluster = cluster[0]
         self.score = cluster[1]
         self.group_n = group_n
-        self.output_file = os.path.join(os.getcwd(), self.group_n)
+        self.output_file = os.path.join(os.getcwd(),'meshed _clusters', self.group_n)
         self._extract_model()
 
     def _extract_model(self):
