@@ -5,6 +5,7 @@ import re
 import point_cloud_utils as pcu
 import numpy as np
 import pickle as pkl
+import pandas as pd
 import matplotlib as mpl
 
 class aminoacid_score:
@@ -34,6 +35,38 @@ class aminoacid_score:
         with open(self.pdb_file, 'r') as f:
             pdb = f.read()
             return pdb
+    
+    def filter_clusters(clusters):
+        clusters.sort(key=lambda x: x[2], reverse=True)
+
+        filtered_clusters = []
+        used_indices = set()
+
+        for cluster in clusters:
+            indices, _, _ = cluster
+            if not any(index in used_indices for index in indices):
+                filtered_clusters.append(cluster)
+                used_indices.update(indices)
+        return filtered_clusters
+
+    def _cluster_aminoacids(self):
+        score = pd.read_csv(self.aminoacid_score, delimiter= '\t', index_col=0)
+        sorted_scores = score.sort_values(by = 'Score', ascending = False)
+        clusters = sorted_scores.iloc[:5]
+        aminoacid_groups = []
+        scored_function = []
+        for i in clusters.index:
+            aminoacid_groups.append([i-1,i,i+1])
+        for i in aminoacid_groups:
+            cluster = score.iloc[i]
+            scored_function.append((cluster.index.tolist(), cluster['AA'].tolist(), cluster['Score'].mean()))
+
+        filtered_clusters = filter_clusters(scored_function)
+        filtered_clusters
+        return filtered_clusters
+    
+
+    
 
 class mesher(aminoacid_score):
     def __init__(self, pdb_file,faces = 15000):
