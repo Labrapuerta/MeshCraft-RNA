@@ -75,6 +75,7 @@ class aminoacid_score:
             for chain in model:
                 for residue in chain:
                     if residue.get_id()[1] == amino_acid_residue_number:
+                        print('found residue')
                         # Calculate the average coordinates of the amino acid
                         atoms = list(residue.get_atoms())
                         avg_x = sum(atom.get_coord()[0] for atom in atoms) / len(atoms)
@@ -82,7 +83,7 @@ class aminoacid_score:
                         avg_z = sum(atom.get_coord()[2] for atom in atoms) / len(atoms)
                         print(f"Avg Coordinates: x={avg_x}, y={avg_y}, z={avg_z}")
                         break
-                        
+
 class aminoacid_groups:
     def __init__(self, pdb_file, cluster, group_n):
         self.pdb_file = pdb_file
