@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from Bio.PDB import PDBParser
 import subprocess
 import os
@@ -137,7 +136,7 @@ class mesher(aminoacid_score):
         output_object = os.path.join(self.output_files, self.name + 'reduced.obj')
         subprocess.run([r"C:\Program Files\Blender Foundation\Blender\blender.exe", "--background", "--python", r"D:\iGEM\blender_process.py", self.watertight_object, self.faces, output_object], shell=True, capture_output= True)
         return output_object
-=======
+    
 from Bio.PDB import PDBParser
 import subprocess
 import os
@@ -276,5 +275,4 @@ class mesher(aminoacid_score):
         output_object = os.path.join(self.output_files, self.name + 'reduced.obj')
         subprocess.run([r"C:\Program Files\Blender Foundation\Blender\blender.exe", "--background", "--python", r"D:\iGEM\blender_process.py", self.watertight_object, self.faces, output_object], shell=True, capture_output= True)
         return output_object
->>>>>>> b517712a90b961091f509de7b63373e7c68c0d25
     

@@ -1,0 +1,9 @@
+biopython
+py3Dmol
+os
+numpy
+matplotlib
+pickle
+ipywidgets
+Ipython
+point-cloud-utils

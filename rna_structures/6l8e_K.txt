@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # The results of GLMSite
 Num	AA	Score
 0	M	0.009
