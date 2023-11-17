@@ -37,7 +37,7 @@ class aminoacid_score:
 
 class mesher(aminoacid_score):
     def __init__(self, pdb_file,faces = 15000):
-        self.msms = 'msms_i86_64Linux2_2.6.1\msms.x86_64Linux2.2.6.1.staticgcc'
+        self.msms = '/content/MeshCraft-RNA/msms_i86_64Linux2_2.6.1/msms.x86_64Linux2.2.6.1'
         self.pdb_file = pdb_file
         self.name = self._pdb_name()
         self.faces = str(faces)
@@ -96,7 +96,7 @@ class mesher(aminoacid_score):
     
     def _xyzrn2mesh(self):
         try:
-            subprocess.run([self.msms, '-if ', self.xyzrn_file , '-of ', os.path.join(self.output_files,self.name), '-prob', '1.4', '-density', '1', '-no_header'], capture_output= True)  
+            subprocess.run([self.msms, '-if ', self.xyzrn_file , '-of ', os.path.join(self.output_files,self.name), '-density', '1', '-no_header'], capture_output= True)  
         except:
             print('Unable to mesh RNA')
     
