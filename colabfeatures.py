@@ -68,7 +68,7 @@ class aminoacid_score:
         return filtered_clusters
     
     def _get_coords(self, group):
-        amino_acid_residue_number = group[0][1]  # Replace with your amino acid number
+        amino_acid_residue_number = self.clusters[group][0]  # Replace with your amino acid number
         parser = PDBParser()
         structure = parser.get_structure('protein', self.pdb_file)
         for model in structure:
