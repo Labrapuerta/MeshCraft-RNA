@@ -37,20 +37,21 @@ class aminoacid_score:
             pdb = f.read()
             return pdb
     
-    def filter_clusters(clusters):
-        clusters.sort(key=lambda x: x[2], reverse=True)
+    def filter_clusters(self,clusters):
+        clusters.sort(key=lambda x: x[1], reverse=True)
 
         filtered_clusters = []
         used_indices = set()
 
         for cluster in clusters:
-            indices, _, _ = cluster
+            indices, _ = cluster
             if not any(index in used_indices for index in indices):
                 filtered_clusters.append(cluster)
                 used_indices.update(indices)
         return filtered_clusters
 
     def _cluster_aminoacids(self):
+        print('a')
         score = pd.read_csv(self.aminoacid_score, delimiter= '\t', index_col=0)
         sorted_scores = score.sort_values(by = 'Score', ascending = False)
         clusters = sorted_scores.iloc[:5]
@@ -60,12 +61,10 @@ class aminoacid_score:
             aminoacid_groups.append([i-1,i,i+1])
         for i in aminoacid_groups:
             cluster = score.iloc[i]
-            scored_function.append((cluster.index.tolist(), cluster['AA'].tolist(), cluster['Score'].mean()))
+            scored_function.append((cluster.index.tolist(),cluster['Score'].mean()))
 
         filtered_clusters = self.filter_clusters(scored_function)
         return filtered_clusters
-    
-
     
 
 class mesher(aminoacid_score):
