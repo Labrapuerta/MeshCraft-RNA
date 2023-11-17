@@ -69,20 +69,26 @@ class aminoacid_score:
     
     def _get_coords(self, group):
         amino_acid_residue_number = self.clusters[group][0]  # Replace with your amino acid number
-        parser = PDBParser()
-        structure = parser.get_structure('protein', self.pdb_file)
-        for model in structure:
-            for chain in model:
-                for residue in chain:
-                    if residue.get_id()[1] == amino_acid_residue_number:
-                        print('found residue')
-                        # Calculate the average coordinates of the amino acid
-                        atoms = list(residue.get_atoms())
-                        avg_x = sum(atom.get_coord()[0] for atom in atoms) / len(atoms)
-                        avg_y = sum(atom.get_coord()[1] for atom in atoms) / len(atoms)
-                        avg_z = sum(atom.get_coord()[2] for atom in atoms) / len(atoms)
-                        print(f"Avg Coordinates: x={avg_x}, y={avg_y}, z={avg_z}")
-                        break
+        coords = []
+        with open(self.pdb_file, 'r') as file:
+            for line in file:
+                if line.startswith("ATOM"):
+                    residue_number = int(line[22:26].strip())
+                    chain = line[21].strip()
+                    if residue_number == amino_acid_residue_number and chain == chain_id:
+                        x = float(line[30:38].strip())
+                        y = float(line[38:46].strip())
+                        z = float(line[46:54].strip())
+                        coords.append((x, y, z))
+
+        # Calculate the average coordinates
+        if coords:
+            avg_x = sum(x for x, _, _ in coords) / len(coords)
+            avg_y = sum(y for _, y, _ in coords) / len(coords)
+            avg_z = sum(z for _, _, z in coords) / len(coords)
+            print(f"Avg Coordinates: x={avg_x}, y={avg_y}, z={avg_z}")
+        else:
+            print("No coordinates found for the specified amino acid.")
 
 class aminoacid_groups:
     def __init__(self, pdb_file, cluster, group_n):
