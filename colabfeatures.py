@@ -68,7 +68,7 @@ class mesher(aminoacid_score):
     
     def _pdb2pqr(self):
         try:
-            subprocess.run(["pdb2pqr", "-ff=AMBER", f"{self.pdb_file}", f"{os.path.join(self.output_files,self.pqr_name)}"], shell=True, capture_output= True)
+            subprocess.run(["pdb2pqr", "-ff=AMBER", f"{self.pdb_file}", f"{os.path.join(self.output_files,self.pqr_name)}"], capture_output= True)
             os.remove(f'{os.path.join(self.output_files, self.name)}.log')
             print('RNA forcefields processed')
             return os.path.join(self.output_files,self.pqr_name)
