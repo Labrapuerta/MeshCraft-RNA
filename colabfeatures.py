@@ -41,7 +41,7 @@ class mesher(aminoacid_score):
         self.pdb_file = pdb_file
         self.name = self._pdb_name()
         self.faces = str(faces)
-        self.output_files = os.path.join(os.getcwd(), '/content/MeshCraft-RNA/rna_structures')
+        self.output_files = os.path.join(os.getcwd(), 'rna_structures')
         self.pqr_name = self.name + '.pqr'
         self.pqr_file = self._pdb2pqr()
         self.xyzrn_name = self.name + '.xyzr'
@@ -70,6 +70,7 @@ class mesher(aminoacid_score):
         try:
             subprocess.run(["pdb2pqr", "-ff=AMBER", f"{self.pdb_file}", f"{os.path.join(self.output_files,self.pqr_name)}"], shell=True, capture_output= True)
             os.remove(f'{os.path.join(self.output_files, self.name)}.log')
+            print('RNA forcefields processed')
             return os.path.join(self.output_files,self.pqr_name)
         except:
             print('Unable to process RNA forcefields')
