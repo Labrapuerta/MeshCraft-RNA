@@ -75,7 +75,7 @@ class aminoacid_score:
                 if line.startswith("ATOM"):
                     residue_number = int(line[22:26].strip())
                     chain = line[21].strip()
-                    if residue_number == amino_acid_residue_number and chain == chain_id:
+                    if residue_number == amino_acid_residue_number:
                         x = float(line[30:38].strip())
                         y = float(line[38:46].strip())
                         z = float(line[46:54].strip())
