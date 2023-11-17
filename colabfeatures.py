@@ -18,7 +18,7 @@ class aminoacid_score:
         self.colors = [self.cmap(score) for score in self.n_aminoacid_afinity]
         self.hex_colors = ["#{:02x}{:02x}{:02x}".format(int(r*255), int(g*255), int(b*255)) for r, g, b, _ in self.colors]
         self.pdb_v = self._read_pdb()
-    
+        self.clusters = self._cluster_aminoacids()
     def _aminoacid_afinity(self):
         aminoacid_afinity = []
         with open(self.aminoacid_score, 'r') as aaf:
@@ -62,7 +62,6 @@ class aminoacid_score:
             scored_function.append((cluster.index.tolist(), cluster['AA'].tolist(), cluster['Score'].mean()))
 
         filtered_clusters = filter_clusters(scored_function)
-        filtered_clusters
         return filtered_clusters
     
 
