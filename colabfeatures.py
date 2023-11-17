@@ -19,6 +19,7 @@ class aminoacid_score:
         self.hex_colors = ["#{:02x}{:02x}{:02x}".format(int(r*255), int(g*255), int(b*255)) for r, g, b, _ in self.colors]
         self.pdb_v = self._read_pdb()
         self.clusters = self._cluster_aminoacids()
+    
     def _aminoacid_afinity(self):
         aminoacid_afinity = []
         with open(self.aminoacid_score, 'r') as aaf:
