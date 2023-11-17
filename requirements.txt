@@ -2,7 +2,6 @@ biopython
 py3Dmol
 numpy
 matplotlib
-pickle
 ipywidgets
 Ipython
 point-cloud-utils
