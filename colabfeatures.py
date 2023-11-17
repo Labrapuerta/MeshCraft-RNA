@@ -62,7 +62,7 @@ class aminoacid_score:
             cluster = score.iloc[i]
             scored_function.append((cluster.index.tolist(), cluster['AA'].tolist(), cluster['Score'].mean()))
 
-        filtered_clusters = filter_clusters(scored_function)
+        filtered_clusters = self.filter_clusters(scored_function)
         return filtered_clusters
     
 
