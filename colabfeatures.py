@@ -68,7 +68,7 @@ class aminoacid_score:
         return filtered_clusters
     
     def _get_coords(self, group):
-        aminoacid = self.clusters[group][1]
+        aminoacid = self.clusters[group][0][1]
         print(aminoacid)
         with open(self.pdb_file, 'r') as f:
             for row in f:
