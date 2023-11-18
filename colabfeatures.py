@@ -69,15 +69,13 @@ class aminoacid_score:
     
     def _get_coords(self, group):
         aminoacid = self.clusters[group][0][1]
-        print(aminoacid)
         with open(self.pdb_file, 'r') as f:
             for row in f:
                 row =  row.split()
-                print(row)
                 if row[0] == 'ATOM':
                     if row[5] == str(aminoacid):
                         return {'x': row[6], 'y': row[7], 'z': row[8]}
-                    
+                  
 class aminoacid_groups:
     def __init__(self, pdb_file, cluster, group_n):
         self.pdb_file = pdb_file
