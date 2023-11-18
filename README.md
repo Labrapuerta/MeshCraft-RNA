@@ -6,9 +6,6 @@ It integrates GMLSite, created by Yidong Song and Yuedong Yang (2003), a tool de
 
 Meshcraft RNA also incorporates Blender, an open-source tool used for creating, editing, and transforming 3D models. With Blender, the number of faces on each mesh are reduced, making them computationally more manageable, and ensuring that the models are watertight.
 
-![image](https://github.com/Labrapuerta/MeshCraft-RNA/assets/69869351/1a5e4a32-e1b1-41ac-b16b-86a05ce567b6)
-
-
 ## Currently we are dealing with compatibility problems of Docker and Nucleic acid binding, to solve this temporarily we developed this google colab to mesh the processed output of the program
 
 ### Get the PDB file and it's aminoacid score using 
