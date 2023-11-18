@@ -9,6 +9,7 @@ import numpy as np
 import pickle as pkl
 import pandas as pd
 import matplotlib as mpl
+import tensorflow as tf
 
 class aminoacid_score:
     def __init__(self, pdb_file, aminoacid_score, cmap = 'viridis'):
@@ -127,6 +128,7 @@ class mesher(aminoacid_score):
         self.face_file = os.path.join(self.output_files, self.face_name)
         self.object_file = self._toobj()
         self.watertight_object = self._watertight()
+        self.pkl_charges = self.vert_charges()
 
     def _pdb_name(self):
         parser = PDBParser()
@@ -162,10 +164,8 @@ class mesher(aminoacid_score):
                 for row in selected_columns:
                     f.write(row + '\n')
         
-        with open(os.path.join(self.output_files, self.name + 'charges.pkl'), 'wb') as f:
-                pkl.dump(charges, f)
         
-        return os.path.join(self.output_files, self.xyzrn_name), os.path.join(self.output_files, self.name + 'charges.pkl')
+        return os.path.join(self.output_files, self.xyzrn_name), charges
     
     def _xyzrn2mesh(self):
         try:
@@ -204,3 +204,35 @@ class mesher(aminoacid_score):
         pcu.save_mesh_vf(os.path.join(self.output_files,self.name+'wt.obj'),vw, fw,dtype=np.float32)
         return os.path.join(self.output_files,self.name+'wt.obj')
     
+    def vert_charges(self):
+        vert = []
+        atoms = []
+        chargesarray = []
+
+        with open(self.watertight_object, 'r') as file:
+            for line in file:
+                parts = line.split()
+                if parts[0] == 'v':    
+                    vert.append([float(parts[1]), float(parts[2]), float(parts[3])])
+
+        chargesarray = self.model_charges
+        vert = tf.convert_to_tensor(vert, dtype=tf.float32)
+        atoms = tf.convert_to_tensor(atoms, dtype=tf.float32)
+        charge = tf.convert_to_tensor(chargesarray, dtype=tf.float32)
+        vertcharges = tf.Variable(tf.zeros([len(vert),], dtype=tf.float32))
+        n = len(vert)
+
+        for i in range(len(atoms)):
+            atom = tf.constant(atoms[i], shape= (1,3), dtype=tf.float32)*tf.ones([n,1], dtype=tf.float32)
+            diff = tf.subtract(vert, atom)
+            abs_diff = tf.abs(diff)
+            squared_sum = tf.reduce_sum(abs_diff, axis=1)
+            chargeassign = float(charge[i])/squared_sum
+            vertcharges.assign_add(chargeassign)
+
+        vertchargesarray = vertcharges.numpy()
+
+        with open(os.path.join(self.output_files, self.name + 'charges.pkl'), 'wb') as f:
+                pkl.dump(vertchargesarray, f)
+
+        return os.path.join(self.output_files, self.name + 'charges.pkl')
