@@ -68,28 +68,14 @@ class aminoacid_score:
         return filtered_clusters
     
     def _get_coords(self, group):
-        amino_acid_residue_number = self.clusters[group][0]  # Replace with your amino acid number
-        coords = []
-        with open(self.pdb_file, 'r') as file:
-            for line in file:
-                if line.startswith("ATOM"):
-                    residue_number = int(line[22:26].strip())
-                    chain = line[21].strip()
-                    if residue_number == amino_acid_residue_number:
-                        x = float(line[30:38].strip())
-                        y = float(line[38:46].strip())
-                        z = float(line[46:54].strip())
-                        coords.append((x, y, z))
-
-        # Calculate the average coordinates
-        if coords:
-            avg_x = sum(x for x, _, _ in coords) / len(coords)
-            avg_y = sum(y for _, y, _ in coords) / len(coords)
-            avg_z = sum(z for _, _, z in coords) / len(coords)
-            print(f"Avg Coordinates: x={avg_x}, y={avg_y}, z={avg_z}")
-        else:
-            print("No coordinates found for the specified amino acid.")
-
+        aminoacid = group[1]
+        with open(self.pdb_file, 'r') as f:
+            for row in f:
+                row =  row.split()
+                if row[0] == 'ATOM':
+                    if row[5] == str(aminoacid):
+                        return {'x': row[6], 'y': row[7], 'z': row[8]}
+                    
 class aminoacid_groups:
     def __init__(self, pdb_file, cluster, group_n):
         self.pdb_file = pdb_file
