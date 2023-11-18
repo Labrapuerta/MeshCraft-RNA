@@ -121,7 +121,7 @@ class mesher(aminoacid_score):
         self.xyzrn_name = self.name + '.xyzr'
         self.vert_name = self.name + '.vert'
         self.face_name = self.name + '.face'
-        self.xyzrn_file, self.model_charges = self._pqr2xyzrn()
+        self.xyzrn_file, self.model_charges, self.atoms = self._pqr2xyzrn()
         self.object_name = self.name + '.obj'
         self._xyzrn2mesh()
         self.vert_file = os.path.join(self.output_files, self.vert_name)
@@ -164,8 +164,8 @@ class mesher(aminoacid_score):
                 for row in selected_columns:
                     f.write(row + '\n')
         
-        
-        return os.path.join(self.output_files, self.xyzrn_name), charges
+        atoms = selected_columns
+        return os.path.join(self.output_files, self.xyzrn_name), charges, atoms
     
     def _xyzrn2mesh(self):
         try:
@@ -216,9 +216,8 @@ class mesher(aminoacid_score):
                     vert.append([float(parts[1]), float(parts[2]), float(parts[3])])
 
         chargesarray = self.model_charges
-        print(chargesarray)
         vert = tf.convert_to_tensor(vert, dtype=tf.float32)
-        atoms = tf.convert_to_tensor(atoms, dtype=tf.float32)
+        atoms = tf.convert_to_tensor(self.atoms, dtype=tf.float32)
         charge = tf.convert_to_tensor(chargesarray, dtype=tf.float32)
         vertcharges = tf.Variable(tf.zeros([len(vert),], dtype=tf.float32))
         n = len(vert)
