@@ -109,12 +109,12 @@ class aminoacid_groups:
 
 
 class mesher(aminoacid_score):
-    def __init__(self, pdb_file,faces = 15000):
+    def __init__(self, pdb_file,group_n, faces = 15000):
         self.msms = '/content/MeshCraft-RNA/msms_i86_64Linux2_2.6.1/msms.x86_64Linux2.2.6.1'
         self.pdb_file = pdb_file
-        self.name = self._pdb_name()
+        self.name = group_n
         self.faces = str(faces)
-        self.output_files = os.path.join(os.getcwd(), 'rna_structures')
+        self.output_files = os.path.join(os.getcwd(),'meshed _clusters', group_n)
         self.pqr_name = self.name + '.pqr'
         self.pqr_file = self._pdb2pqr()
         self.xyzrn_name = self.name + '.xyzr'
