@@ -216,6 +216,7 @@ class mesher(aminoacid_score):
                     vert.append([float(parts[1]), float(parts[2]), float(parts[3])])
 
         chargesarray = self.model_charges
+        print(chargesarray)
         vert = tf.convert_to_tensor(vert, dtype=tf.float32)
         atoms = tf.convert_to_tensor(atoms, dtype=tf.float32)
         charge = tf.convert_to_tensor(chargesarray, dtype=tf.float32)
