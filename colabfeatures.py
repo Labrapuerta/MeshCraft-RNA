@@ -78,11 +78,12 @@ class aminoacid_score:
                   
 class aminoacid_groups:
     def __init__(self, pdb_file, cluster, group_n):
+        os.mkdir(os.path.join(os.getcwd(),'meshed _clusters', group_n))
         self.pdb_file = pdb_file
         self.cluster = cluster[0]
         self.score = cluster[1]
         self.group_n = group_n
-        self.output_file = os.path.join(os.getcwd(),'meshed _clusters', self.group_n)
+        self.output_file = os.path.join(os.getcwd(),'meshed _clusters',group_n, self.group_n)
         self._extract_model()
 
     def _extract_model(self):
