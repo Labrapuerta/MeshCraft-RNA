@@ -17,7 +17,7 @@ Meshcraft RNA also incorporates Blender, an open-source tool used for creating, 
 - [Colab Notebook](https://colab.research.google.com/drive/1EYucZ4VVxXrWLzk4PZJi365-zcfUlQsO?usp=sharing)
 
 Our colab notebook lets you visualize the results and scores for each group
-![image](https://github.com/Labrapuerta/MeshCraft-RNA/assets/69869351/1a5e4a32-e1b1-41ac-b16b-86a05ce567b6)
+![image](https://github.com/Labrapuerta/MeshCraft-RNA/blob/main/colab%20Mesh-craft.png)
 
 ## Prerequisites
 The program is containerized using Docker for easy execution.
