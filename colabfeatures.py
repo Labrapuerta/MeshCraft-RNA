@@ -154,17 +154,18 @@ class mesher(aminoacid_score):
         with open(self.pqr_file) as f:
                 selected_columns = []
                 charges = []
+                atoms = []
                 for row in f:
                     row = row.split()
                     if len(row) == 10:
                         selected_columns.append(f"  {row[5]}   {row[6]}    {row[7]} {row[9]}")
+                        atoms.append([float(row[5]), float(row[6]), float(row[7])])
                         charges.append(float(row[8]))
 
         with open(os.path.join(self.output_files, self.xyzrn_name), 'w') as f:
                 for row in selected_columns:
                     f.write(row + '\n')
         
-        atoms = selected_columns
         return os.path.join(self.output_files, self.xyzrn_name), charges, atoms
     
     def _xyzrn2mesh(self):
